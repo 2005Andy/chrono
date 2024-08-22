@@ -10,6 +10,7 @@ SET(FSI_DEMOS
     demo_FSI_CylinderDrop
     demo_FSI_SingleWheelTest
     demo_FSI_BCE
+    demo_FSI_MeshToPoint
 )
 
 set(FSI_MKL_DEMOS

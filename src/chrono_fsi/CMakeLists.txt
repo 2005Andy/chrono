@@ -80,6 +80,37 @@ if(ENABLE_MODULE_OPENGL)
 endif()
 
 # ------------------------------------------------------------------------------
+# Additional options PCL for this module
+# ------------------------------------------------------------------------------
+
+option(USE_FSI_PCL "Use PCL library to implement mesh to point" ON)
+if(USE_FSI_PCL)
+    find_package(PCL 1.14 REQUIRED)
+    find_package(assimp REQUIRED)
+
+    if(PCL_FOUND)
+        message(STATUS "PCL version: ${PCL_VERSION}")
+        include_directories(${PCL_INCLUDE_DIRS})
+        set(CH_FSI_INCLUDES ${CH_FSI_INCLUDES} ${PCL_INCLUDE_DIRS})
+        link_directories(${PCL_LIBRARY_DIRS})
+        add_definitions(${PCL_DEFINITIONS})
+        list(APPEND CH_FSI_LINKED_LIBRARIES ${PCL_LIBRARIES})
+    endif ()
+
+    if(assimp_FOUND)
+        message(STATUS "assimp version: ${ASSIMP_VERSION}")
+        include_directories(${ASSIMP_INCLUDE_DIRS})
+        set(CH_FSI_INCLUDES ${CH_FSI_INCLUDES} ${ASSIMP_INCLUDE_DIRS})
+        list(APPEND CH_FSI_LINKED_LIBRARIES ${ASSIMP_LIBRARIES})
+    endif ()
+
+    if(NOT PCL_FOUND OR NOT assimp_FOUND)
+        message(STATUS "NOT find all library")
+        set(USE_FSI_PCL OFF CACHE BOOL "Use PCL library to implement mesh to point" FORCE)
+    endif ()
+endif ()
+
+# ------------------------------------------------------------------------------
 # Make some variables visible from parent directory
 # ------------------------------------------------------------------------------
 
@@ -160,6 +191,8 @@ set(ChronoEngine_FSI_UTILS_FILES
     utils/ChUtilsPrintSph.cuh
     utils/ChUtilsDevice.cuh
     utils/ChUtilsTypeConvert.h
+    utils/ChUtilsMeshToPoint.h
+    utils/ChUtilsMeshToPoint.cpp
 
     utils/ChUtilsGeneratorFluid.cpp
     utils/ChUtilsPrintSph.cu
@@ -189,7 +222,9 @@ set_target_properties(ChronoEngine_fsi PROPERTIES
 target_compile_definitions(ChronoEngine_fsi PRIVATE "CH_API_COMPILE_FSI")
 target_compile_definitions(ChronoEngine_fsi PRIVATE "CH_IGNORE_DEPRECATED")
 
-target_link_libraries(ChronoEngine_fsi ${CH_FSI_LINKED_LIBRARIES})
+target_link_libraries(ChronoEngine_fsi
+        ${CH_FSI_LINKED_LIBRARIES}
+)
 
 install(TARGETS ChronoEngine_fsi
         RUNTIME DESTINATION bin
