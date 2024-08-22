@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/DEM-Engine" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/DEM-Engine/thirdparty/jitify" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/chpf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/cub" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/flatbuffers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/googlebenchmark" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/chrono_thirdparty/googletest" vcs="Git" />
+  </component>
+</project>
